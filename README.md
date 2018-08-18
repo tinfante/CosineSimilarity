@@ -18,5 +18,5 @@ the excellent Whoosh library, that does all this and more.
 An example showing how easy it is to do the same using Sklearn's TF-IDF
 Vectorizer class and cosine_similarity function. Again, this could be
 improved doing stemming/lemmatization, improving stopword filtering,
-using n-grams, etc.,but the idea is to keep it simple and show how it
-can be done with very few lines of code.
+using n-grams, etc., but the idea is to keep it simple and show how it
+can be done in less than 10 lines of code.
