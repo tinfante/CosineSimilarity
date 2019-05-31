@@ -7,7 +7,11 @@ const docs = [
     "Learning IPython for Interactive Computing and Data Visualization"
 ];
 
-const tokenized = docs.map(x => x.match(/\w+/g));
+
+function tokenize_docs(documents) {
+    return documents.map(x => x.match(/\w+/g));
+}
+
 
 function vocabulary(tokenized_docs) {
     var word;
@@ -21,9 +25,6 @@ function vocabulary(tokenized_docs) {
     return vocab.sort();
 }
 
-const lexicon = vocabulary(tokenized);
-
-const vector_template = lexicon.map(x => [x, 0]);
 
 function counter(tokens) {
     var freqs = {};
@@ -33,15 +34,30 @@ function counter(tokens) {
     return freqs;
 }
 
-function vectors(tokenized_docs, vocab_list) {
+
+function vectorize(tokenized_docs, vocabulary) {
     var vecs = [];
+    var vec;
+    var count;
     for (var i=0; i<tokenized_docs.length; ++i) {
-        var vec = vector_template.slice();
-        var counts = counter(tokenized_docs[i].map(x => x.toLowerCase()));
-        console.log(vec);
-        console.log(counts)
+        vec = [];
+        count = counter(tokenized_docs[i].map(x => x.toLowerCase()));
+        for (var k=0; k<vocabulary.length; ++k) {
+            if (count.hasOwnProperty(vocabulary[k])) {
+                vec.push(count[vocabulary[k]])
+            } else {
+                vec.push(0);
+            }
+        }
+        vecs.push(vec);
     }
+    return vecs;
 }
 
+const tokenized = tokenize_docs(docs);
+const lexicon = vocabulary(tokenized);
+const vecs_count = vectorize(tokenized, lexicon);
+//const vecs_tdfif = tfidf(
+
 console.log(lexicon);
-vectors(tokenized, lexicon);
+console.log(vecs_onehot);
