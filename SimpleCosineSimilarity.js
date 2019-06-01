@@ -36,9 +36,9 @@ function counter(tokens) {
 
 
 function vectorize(tokenized_docs, vocabulary) {
-    var vecs = [];
-    var vec;
     var count;
+    var vec;
+    var vecs = [];
     for (var i=0; i<tokenized_docs.length; ++i) {
         vec = [];
         count = counter(tokenized_docs[i].map(x => x.toLowerCase()));
