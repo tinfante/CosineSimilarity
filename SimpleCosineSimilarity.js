@@ -60,4 +60,4 @@ const vecs_count = vectorize(tokenized, lexicon);
 //const vecs_tdfif = tfidf(
 
 console.log(lexicon);
-console.log(vecs_onehot);
+console.log(vecs_count);
