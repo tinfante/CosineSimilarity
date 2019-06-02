@@ -1,4 +1,12 @@
 #!/usr/bin/env node
+/*
+ * Módulo para crear un modelo espacio vectorial con Term Frequency-Inverse
+ * Document Frequency y hacerle queries con Cosine Similarity. La clase
+ * exportada se construye con una lista de documentos, y la instancia expone
+ * el método query() que recibe un string, y devuelve un ranking de los
+ * documentos más parecidos en el modelo.
+ */
+
 
 module.exports = main;
 
@@ -68,7 +76,10 @@ function count_vectorize(tokenized_docs, vocabulary) {
 
 
 /*
- *
+ * Crea una lista de vectores tf-idf y una lista de frecuencias totales a
+ * partir de una lista de vectores de frecuencia y una lista de vocabulario.
+ * Recibe un array de arrays de integers y un array de strings, y devuelve un
+ * array de array de floats y un array de ints.
  */
 function tfidf_vectorize(count_vectors, vocabulary) {
     const count_sums = count_vectors.reduce(function(total, vec) {
@@ -78,7 +89,7 @@ function tfidf_vectorize(count_vectors, vocabulary) {
         return total;
     }, new Array(vocabulary.length).fill(0));
 
-    // count_vectors copy to mutate into TF-IDF vectors.
+    // deep copy de count_vectors para mutar a vectores tf-idf.
     var cvc = JSON.parse(JSON.stringify(count_vectors));
     for (var i=0; i<cvc.length; ++i) {
         for (var j=0; j<cvc[i].length; ++j) {
@@ -92,7 +103,8 @@ function tfidf_vectorize(count_vectors, vocabulary) {
 
 
 /*
- *
+ * Calcula la similitud de coseno de dos vectores. Recibe una lista de floats,
+ * devuelve un float entre 0 y 1.
  */
 function cosine_similarity(vec1, vec2) {
     var dot_product = 0;
@@ -106,7 +118,11 @@ function cosine_similarity(vec1, vec2) {
 
 
 /*
- *
+ * Hace un vector tf-idf de una query y la lista de vocabulario, número de
+ * documentos y conteo de frecuencia de palabras del modelo. Recibe un string,
+ * un array de strings, un int y un objeto cuyas llaves son palabras del
+ * vocabulario del modelo y sus respectivas frecuencias. Devuelve un array
+ * de floats.
  */
 function query_vectorize(query, vocab, model_num_docs, model_word_counts) {
     var qtoks = tokenize_docs([query])[0];
@@ -122,7 +138,9 @@ function query_vectorize(query, vocab, model_num_docs, model_word_counts) {
 
 
 /*
- *
+ * Constructor de la clase, recibe una lista de documentos (array de strings),
+ * crea el modelo vectorial tf-idf de ellos, y hace público el método query()
+ * para ver la similitud de una query con los documentos del modelo.
  */
 function main(documents) {
     const tokenized = tokenize_docs(documents);
