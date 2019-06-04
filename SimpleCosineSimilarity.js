@@ -111,8 +111,8 @@ function cosine_similarity(vec1, vec2) {
     for (var i=0; i<vec1.length; ++i) {
         dot_product += vec1[i] * vec2[i];
     }
-    var magnitude1 = Math.sqrt(vec1.reduce((x, y) => x + y**2, 0));
-    var magnitude2 = Math.sqrt(vec2.reduce((x, y) => x + y**2, 0));
+    const magnitude1 = Math.sqrt(vec1.reduce((x, y) => x + y**2, 0));
+    const magnitude2 = Math.sqrt(vec2.reduce((x, y) => x + y**2, 0));
     return dot_product / (magnitude1 * magnitude2)
 }
 
@@ -125,8 +125,8 @@ function cosine_similarity(vec1, vec2) {
  * de floats.
  */
 function query_vectorize(query, vocab, model_num_docs, model_word_counts) {
-    var qtoks = tokenize_docs([query])[0];
-    var count_vec = count_vectorize([qtoks], vocab)[0];
+    const qtoks = tokenize_docs([query])[0];
+    const count_vec = count_vectorize([qtoks], vocab)[0];
     var tfidf_vec = new Array(vocab.length).fill(0);
     for (var i=0; i<count_vec.length; ++i) {
         var tf = count_vec[i] / count_vec.length;
