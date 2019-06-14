@@ -92,8 +92,14 @@ function tfidf_vectorize(count_vectors, vocabulary) {
     // deep copy de count_vectors para mutar a vectores tf-idf.
     var cvc = JSON.parse(JSON.stringify(count_vectors));
     for (var i=0; i<cvc.length; ++i) {
+        var doc_length = cvc[i].filter(i => i != 0).length;
         for (var j=0; j<cvc[i].length; ++j) {
-            var tf = cvc[i][j] / cvc[i].length;
+            // TF: hay varias opciones, una típica y la que usamos acá es la
+            // frecuencia del término en el documento partido por el largo del
+            // documento.
+            var tf = cvc[i][j] / doc_length;
+            // IDF: cantidad de documentos partido por la frecuencia del término
+            // en todos los documentos.
             var idf = Math.log2(cvc.length / count_sums[j]);
             cvc[i][j] = tf * idf;
         }
