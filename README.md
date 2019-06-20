@@ -22,8 +22,3 @@ An example showing how easy it is to do the same using Sklearn's
 this could be improved doing stemming/lemmatization, improving stopword
 filtering, using n-grams, etc., but the idea is to keep it simple and show how
 it can be done in less than 10 lines of code.
-
-## Gensim Cosine Similarity
-
-Same as above, but using Gensim instead of Sklearn.
-
